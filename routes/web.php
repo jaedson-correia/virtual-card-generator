@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
-Route::get('/{slug}', [VirtualCardController::class, 'show'])->name('virtual-card.show');
+Route::view('/generate', 'generate')->name('generate');
+
+Route::get('/{slug}', [VirtualCardController::class, 'show'])->name('virtual-card.show'); // Should be the last route to let other routes take priority

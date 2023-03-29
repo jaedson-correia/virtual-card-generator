@@ -12,14 +12,9 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="bg-dark">
-
-    <div class="d-flex align-items-center justify-content-center flex-column gap-2">
-        <div>
-            <h1 class="text-white">Virtual business card generator</h1>
-        </div>
-        <a href="{{ route('generate') }}" class="btn btn-outline-light">Generate</a>
+<body>
+    <div id="app">
+        @yield('content')
     </div>
-
 </body>
 </html>
