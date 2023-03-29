@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\SlugRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
@@ -34,7 +35,8 @@ class CreateVirtualCardRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'unique:virtual_cards'
+                'unique:virtual_cards',
+                new SlugRule,
             ],
             'linkedin' => [
                 'required'
@@ -43,7 +45,7 @@ class CreateVirtualCardRequest extends FormRequest
                 'required'
             ],
             'slug' => [
-                'unique:virtual_cards'
+                'unique:virtual_cards',
             ],
             'extra' => [
                 'nullable'
@@ -54,7 +56,7 @@ class CreateVirtualCardRequest extends FormRequest
     public function messages()
     {
         return [
-            'slug.unique' => 'You can\'t use that name'
+            'slug.unique' => 'The name has already been taken.'
         ];
     }
 }
