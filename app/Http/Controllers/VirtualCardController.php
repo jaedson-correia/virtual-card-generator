@@ -30,7 +30,7 @@ class VirtualCardController extends Controller
 
         $card = VirtualCard::create($validated);
 
-        $qrCode = json_encode(QrCode::generate(route('virtual-card.show', [$card->slug])));
+        $qrCode = base64_encode(QrCode::generate(route('virtual-card.show', [$card->slug])));
 
         return response()->json([
             'card' => $card,
