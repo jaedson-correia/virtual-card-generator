@@ -3,10 +3,13 @@
 namespace Tests\Unit;
 
 use App\Models\VirtualCard;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CreateVirtualCardApiTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function it_should_fail_validation(): void
     {

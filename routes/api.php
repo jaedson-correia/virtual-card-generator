@@ -21,4 +21,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(VirtualCardController::class)->group(function () {
     Route::post('/generate', 'store');
+    Route::get('/cards', 'index');
 });

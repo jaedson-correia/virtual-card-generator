@@ -3,10 +3,14 @@
 namespace Tests\Unit;
 
 use App\Models\VirtualCard;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ShowVirtualCardTest extends TestCase
 {
+
+    use RefreshDatabase;
+
     /** @test */
     public function it_should_return_404(): void
     {
@@ -18,16 +22,9 @@ class ShowVirtualCardTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_200(): void
+    public function it_should_return_200_with_right_card(): void
     {
-        $string = substr(md5(rand()), 0, 12);
-
-        $card = VirtualCard::create([
-            'name' => $string,
-            'linkedin' => $string,
-            'github' => $string,
-            'slug' => $string
-        ]);
+        $card = VirtualCard::factory()->create();
 
         $response = $this->call('GET', '/'.$card->slug);
 
