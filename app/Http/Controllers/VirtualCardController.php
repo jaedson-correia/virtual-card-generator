@@ -4,44 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateVirtualCardRequest;
 use App\Models\VirtualCard;
+use App\Services\VirtualCardService;
 use Illuminate\Http\JsonResponse;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class VirtualCardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct(
+        protected VirtualCardService $virtualCardService
+    )
+    { }
+
     public function index(): JsonResponse
     {
-        $cards = VirtualCard::all();
+        $data = $this->virtualCardService->index();
 
-        return response()->json([
-            'cards' => $cards
-        ], 200);
+        return response()->json($data, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CreateVirtualCardRequest $request)
     {
-        $validated = $request->validated();
+        $data = $this->virtualCardService->store($request->validated());
 
-        $card = VirtualCard::create($validated);
-
-        $qrCode = base64_encode(QrCode::size(200)->generate(route('virtual-card.show', [$card->slug])));
-
-        return response()->json([
-            'card' => $card,
-            'qr-code' => $qrCode
-        ], 201);
+        return response()->json($data, 201);
     }
 
     public function show(string $slug)
     {
-        $card = VirtualCard::findBySlug($slug);
+        $data = $this->virtualCardService->show($slug);
 
-        return view('virtual-card', compact('card'));
+        return view('virtual-card', $data);
     }
 }
